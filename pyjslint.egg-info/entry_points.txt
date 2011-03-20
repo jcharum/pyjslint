@@ -1,0 +1,4 @@
+
+      [console_scripts]
+      jslint = pyjslint:main
+      
