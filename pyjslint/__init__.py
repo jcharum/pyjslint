@@ -65,16 +65,30 @@ JSLINT_OPTIONS = undefined // used the default settings
 //
 
 var jslintOneFile = function(fileName, fileContents) {
-    var result = JSLINT(fileContents, JSLINT_OPTIONS);
-    var i;
-    var error;
-    if (! result) {
-        for (i = 0; i < JSLINT.errors.length; i++) {
-            error = JSLINT.errors[i];
+    var i, error, global, implied;
+    JSLINT(fileContents, JSLINT_OPTIONS);
+    data = JSLINT.data();
+    if (data.errors) {
+        for (i = 0; i < data.errors.length; i++) {
+            var error = data.errors[i];
             print(fileName + " " + error.line + ": " + error.reason);
             print(error.evidence);
             print("");
         }
+    }
+    if (data.implieds) {
+	for (i = 0; i < data.implieds.length; i++) {
+	    var implied = data.implieds[i];
+	    print(fileName + " " + implied.line + ": implied global '" + implied.name + "'");
+	    print("");
+	}
+    }
+    if (data.unused) {
+	for (i = 0; i < data.unused.length; i++) {
+	    var unused = data.unused[i];
+	    print(fileName + " " + unused.line + ": unused variable '" + unused.name + "'");
+	    print("");
+	}
     }
 };
 """
