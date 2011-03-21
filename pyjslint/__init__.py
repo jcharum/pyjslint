@@ -55,7 +55,7 @@ REPORT_FUNCTION = """
 // The options we set for jslint.
 //
 
-var JSLINT_OPTIONS = { white : true, maxlen : 80 };
+var JSLINT_OPTIONS = %s;
 
 //
 // jslintOneFile
@@ -109,7 +109,7 @@ def file_contents_as_string_constant(file_name):
     file_contents = file_contents.replace('\n', '\\n')
     return '"' + file_contents + '"'
 
-def generate_javascript():
+def generate_javascript(options):
     """
     Writes a complete Javascript program to run jslint on all of the
     files listed on the command line.
@@ -118,7 +118,7 @@ def generate_javascript():
     # First, the JSLINT function
     out.write(read_file(JSLINT_SOURCE_FILE));
     # Next, our reporting function
-    out.write(REPORT_FUNCTION)
+    out.write(REPORT_FUNCTION % options)
     # Finally, run the reporting function on each of the input files.
     for file_name in sys.argv[1:]:
         out.write('jslintOneFile("%s", ' % file_name)
@@ -128,13 +128,17 @@ def generate_javascript():
     return out.getvalue()
 
 def main():
+    options = "undefined";
+    if len(sys.argv) > 1 and sys.argv[1] == '--options':
+        options = sys.argv[2]
+        del sys.argv[1:3]
     p = subprocess.Popen(
         'js',
         stdin = subprocess.PIPE,
         stdout = subprocess.PIPE,
         stderr = subprocess.STDOUT
         )
-    (out, err) = p.communicate(generate_javascript())
+    (out, err) = p.communicate(generate_javascript(options))
     assert err == None
     sys.stdout.write(out)
     if out == '':

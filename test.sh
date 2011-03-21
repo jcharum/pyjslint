@@ -9,7 +9,7 @@ else
     exit 1
 fi
 
-jslint test/bad.js > test/bad.actual
+jslint --options '{ white : true, maxlen : 80 }' test/bad.js > test/bad.actual
 if diff test/bad.golden test/bad.actual
 then
     echo OK
