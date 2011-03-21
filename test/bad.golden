@@ -1,0 +1,16 @@
+test/bad.js 6: Expected exactly one space between 'function' and '('.
+var foo = function() {
+
+test/bad.js 7: Expected 'var' at column 1, not column 5.
+    var unused; // unused variable;
+
+test/bad.js 8: Expected 'global' at column 1, not column 5.
+    global = 5; // global variable
+
+test/bad.js 9: Expected ';' and instead saw '(end)'.
+} // missing ;
+
+test/bad.js 8: implied global 'global'
+
+test/bad.js 6: unused variable 'unused'
+

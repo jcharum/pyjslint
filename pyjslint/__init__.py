@@ -55,7 +55,7 @@ REPORT_FUNCTION = """
 // The options we set for jslint.
 //
 
-JSLINT_OPTIONS = undefined // used the default settings
+var JSLINT_OPTIONS = { white : true, maxlen : 80 };
 
 //
 // jslintOneFile
@@ -64,7 +64,7 @@ JSLINT_OPTIONS = undefined // used the default settings
 // and prints out any errors that were found.
 //
 
-var jslintOneFile = function(fileName, fileContents) {
+var jslintOneFile = function (fileName, fileContents) {
     var i, error, global, implied;
     JSLINT(fileContents, JSLINT_OPTIONS);
     data = JSLINT.data();
