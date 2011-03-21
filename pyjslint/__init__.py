@@ -71,23 +71,29 @@ var jslintOneFile = function (fileName, fileContents) {
     if (data.errors) {
         for (i = 0; i < data.errors.length; i++) {
             var error = data.errors[i];
-            print(fileName + " " + error.line + ": " + error.reason);
-            print(error.evidence);
-            print("");
+            if (error) {
+                print(fileName + " " + error.line + ": " + error.reason);
+                print(error.evidence);
+                print("");
+            }
         }
     }
     if (data.implieds) {
 	for (i = 0; i < data.implieds.length; i++) {
 	    var implied = data.implieds[i];
-	    print(fileName + " " + implied.line + ": implied global '" + implied.name + "'");
-	    print("");
+            if (implied) {
+                print(fileName + " " + implied.line + ": implied global '" + implied.name + "'");
+                print("");
+            }
 	}
     }
     if (data.unused) {
 	for (i = 0; i < data.unused.length; i++) {
 	    var unused = data.unused[i];
-	    print(fileName + " " + unused.line + ": unused variable '" + unused.name + "'");
-	    print("");
+            if (unused) {
+                print(fileName + " " + unused.line + ": unused variable '" + unused.name + "'");
+                print("");
+            }
 	}
     }
 };
